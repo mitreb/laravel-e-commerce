@@ -66,7 +66,7 @@ class CheckoutService
 
             // Queue discount code generation
             GenerateDiscountCode::dispatch($user)
-                ->delay(now()->addMinutes(15));
+                ->delay(now()->addMinutes(config('discounts.generation_delay_minutes', 15)));
 
             return $order->load('items.product');
         });
