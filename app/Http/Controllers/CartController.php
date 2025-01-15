@@ -32,4 +32,15 @@ class CartController extends Controller
             return response()->json(['error' => $e->getMessage()], 422);
         }
     }
+
+    public function removeFromCart(Product $product): JsonResponse
+    {
+        try {
+            $this->cartService->removeFromCart($product, auth()->id());
+
+            return response()->json(['message' => 'Product removed from cart']);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 422);
+        }
+    }
 }
