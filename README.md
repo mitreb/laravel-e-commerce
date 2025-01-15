@@ -19,3 +19,17 @@ Fifteen minutes after checkout, a user should receive a discount code of € 5,-
 
 # Out-of-scope
 The UI is optional. Payments in this application are based on invoices. Invoices are out of scope :-)
+
+# Implementation Status
+
+## Completed ✅
+
+-   Database models and relationships
+-   Cart checkout with discount codes
+-   Stock validation
+-   Discount code generation and delivery
+-   Email notifications
+
+## Next Steps 🔧
+
+Testing and full functionality
