@@ -5,8 +5,9 @@ namespace App\Services;
 use App\Models\User;
 use App\Models\Order;
 use App\Models\CartItem;
-use Illuminate\Support\Facades\DB;
+use App\Models\DiscountCode;
 use App\Jobs\GenerateDiscountCode;
+use Illuminate\Support\Facades\DB;
 
 class CheckoutService
 {
@@ -35,7 +36,12 @@ class CheckoutService
             // Apply discount if valid code provided
             $discountAmount = 0;
             if ($discountCode) {
-                $discountAmount = 5.00; // Fixed discount amount as per requirements
+                $discount = DiscountCode::where('code', $discountCode)
+                    ->where('is_used', false)
+                    ->firstOrFail();
+
+                $discountAmount = $discount->amount;
+                $discount->update(['is_used' => true]);
             }
 
             // Create order
