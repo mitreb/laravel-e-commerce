@@ -37,7 +37,7 @@ class GenerateDiscountCode implements ShouldQueue
     private function generateUniqueCode(): string
     {
         do {
-            $code = 'DISCOUNT-' . Str::random(8);
+            $code = config('discounts.prefix', 'DISCOUNT-') . Str::random(config('discounts.code_length', 8));
         } while (DiscountCode::where('code', $code)->exists());
 
         return $code;
