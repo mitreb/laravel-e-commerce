@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Order;
 use App\Models\CartItem;
 use Illuminate\Support\Facades\DB;
+use App\Jobs\GenerateDiscountCode;
 
 class CheckoutService
 {
@@ -57,7 +58,9 @@ class CheckoutService
             // Clear cart
             $cartItems->each->delete();
 
-            // TODO: Dispatch job to generate discount code here
+            // Queue discount code generation
+            GenerateDiscountCode::dispatch($user)
+                ->delay(now()->addMinutes(15));
 
             return $order->load('items.product');
         });
