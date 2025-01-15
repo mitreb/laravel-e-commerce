@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Exceptions\InsufficientStockException;
 
 class Product extends Model
 {
@@ -24,7 +25,9 @@ class Product extends Model
     public function decrementStock(int $quantity): void
     {
         if (!$this->isInStock($quantity)) {
-            throw new \Exception('Not enough stock');
+            throw new InsufficientStockException(
+                "Not enough stock available for {$this->name}"
+            );
         }
 
         $this->decrement('stock_quantity', $quantity);
