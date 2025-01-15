@@ -26,8 +26,8 @@ class GenerateDiscountCode implements ShouldQueue
         $discountCode = DiscountCode::create([
             'user_id' => $this->user->id,
             'code' => $this->generateUniqueCode(),
-            'amount' => 5.00,
-            'expires_at' => now()->addDays(30),
+            'amount' => config('discounts.default_amount', 5.00),
+            'expires_at' => now()->addDays(config('discounts.expiry_days', 30)),
         ]);
 
         // Send notification
